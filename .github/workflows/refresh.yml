@@ -34,9 +34,11 @@ concurrency:
 
 env:
   MODEL_FILE: Bonsai-8B-Q1_0.gguf
-  # Hugging Face first: weights.aitherium.com answers GitHub-hosted runners 403
-  # (measured 2026-11-09, run 42713051853). The mirror stays as the fallback.
-  MODEL_URL: https://huggingface.co/prism-ml/Bonsai-8B-gguf/resolve/main/Bonsai-8B-Q1_0.gguf
+  # Our own release asset first: weights.aitherium.com is only a Worker in front of
+  # these same releases, and it answered a GitHub-hosted runner 403 (2026-11-09,
+  # run 42713051853). A runner reads a GitHub release directly. The Worker stays as
+  # the fallback for self-hosted runners.
+  MODEL_URL: https://github.com/Aitherium/aitherkvcache/releases/download/bonsai-q1-v1/Bonsai-8B-Q1_0.gguf
   MODEL_MIRROR: https://weights.aitherium.com/Bonsai-8B-Q1_0.gguf
   # Bonsai 1 Q1_0 runs on stock llama.cpp. (Bonsai 2 needs the PrismML fork.)
   LLAMA_IMAGE: ghcr.io/ggml-org/llama.cpp:server
