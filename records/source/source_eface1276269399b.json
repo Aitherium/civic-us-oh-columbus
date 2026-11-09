@@ -1,7 +1,8 @@
 {
+  "content_hash": "sha256:575cddb9294fa833c44f9ef05970958137fabddad6d2eeb657b3c2e56be54114",
   "generation": {
     "at": "2026-11-09",
-    "content_hash": "sha256:8daee6a583acb05003f0086b52c5fdd2a42e7a3dc114cf0d596dacdbe54d4bc0",
+    "content_hash": "sha256:cbe132fb8f4ee8a9e9f563e05e58f899e97776132e28498b502032e5e8e61cde",
     "generator": "civic_repo_gen/0.1.0",
     "source_snapshot": {
       "boundaries": "2026-11-09",
@@ -10,10 +11,11 @@
       "units": "2026-11-09"
     }
   },
-  "http_status": 0,
+  "http_status": 200,
   "id": "source:eface1276269399b",
   "jurisdiction": "",
   "kind": "source",
+  "last_modified": "Thu, 24 Aug 2023 12:44:48 GMT",
   "license": "US Government work (public domain)",
   "media_type": "html",
   "note": "the Census row this jurisdiction and its bodies come from",
@@ -33,8 +35,8 @@
     ],
     "validated": {
       "at": "2026-11-09",
-      "by": "civic_repo_gen/0.1.0",
-      "method": "generated-official"
+      "by": "civic-verify-bot",
+      "method": "source-fetched"
     },
     "vouches": []
   },
