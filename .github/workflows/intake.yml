@@ -1,0 +1,115 @@
+name: intake
+
+# An issue form is UNTRUSTED input. This job runs the repo's own intake, which
+# derives every id from the submitted facts and refuses anything the validator
+# rejects. It never pushes to main: it opens a pull request for review.
+#
+# Three limits live here, not in prose:
+#   * account age < 30 days -> needs-human, no record (intake.py)
+#   * more than 5 submissions per account per day -> needs-human (this file)
+#   * a source host off config/official_domains.txt -> refused (CV050)
+
+on:
+  # ``opened`` only. An ``edited`` trigger would let a submitter change the issue
+  # body after a maintainer has reviewed the PR, and the same branch would then
+  # carry different records under the same review.
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: intake-${{ github.event.issue.number }}
+  cancel-in-progress: true
+
+jobs:
+  intake:
+    if: contains(github.event.issue.labels.*.name, 'submission') || contains(github.event.issue.labels.*.name, 'rectification')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: per-account daily cap (5)
+        id: cap
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AUTHOR: ${{ github.event.issue.user.login }}
+        run: |
+          today=$(date -u +%Y-%m-%d)
+          # Both labels count against the cap: a "rectification" issue writes
+          # attacker-chosen text into a public file just like a submission.
+          n=0
+          for lbl in submission rectification; do
+            c=$(gh search issues --repo "$GITHUB_REPOSITORY" --label "$lbl" \
+                  --author "$AUTHOR" --created ">=$today" --json number --jq 'length')
+            n=$((n + c))
+          done
+          echo "submissions today: $n"
+          if [ "$n" -gt 5 ]; then
+            gh issue edit "${{ github.event.issue.number }}" --add-label needs-human
+            gh issue comment "${{ github.event.issue.number }}" \
+              --body "needs-human: more than 5 submissions from this account today."
+            echo "over=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "over=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: write the record files
+        id: intake
+        if: steps.cap.outputs.over != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+        run: |
+          set +e
+          python tools/intake.py --event "$GITHUB_EVENT_PATH" >out.txt 2>err.txt
+          rc=$?
+          cat out.txt
+          if grep -q '^needs-human' out.txt; then
+            gh issue edit "${{ github.event.issue.number }}" --add-label needs-human
+            gh issue comment "${{ github.event.issue.number }}" --body "$(cat out.txt)"
+            echo "record=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [ "$rc" -ne 0 ]; then
+            gh issue edit "${{ github.event.issue.number }}" --add-label needs-human
+            gh issue comment "${{ github.event.issue.number }}" --body "$(cat err.txt)"
+            echo "record=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "record=$(cat out.txt)" >> "$GITHUB_OUTPUT"
+
+      - name: validate with the submission in place
+        if: steps.intake.outputs.record != ''
+        run: python tools/check.py
+
+      - name: open a pull request
+        if: steps.intake.outputs.record != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RECORD: ${{ steps.intake.outputs.record }}
+          ISSUE: ${{ github.event.issue.number }}
+        run: |
+          # The branch name carries a hash of the record, so a re-run cannot rewrite
+          # a branch a maintainer is already reviewing.
+          h=$(printf '%s' "${RECORD}" | sha256sum | cut -c1-12)
+          branch="submit/${ISSUE}-${h}"
+          git checkout -b "$branch"
+          git add records requests RETRACTIONS.md coverage.json config/official_domains.txt
+          git -c user.name="civic-intake" -c user.email="civic@aitherium.com" \
+            commit -m "civic: intake issue #${ISSUE} (${RECORD})"
+          git push origin "$branch"
+          if ! gh pr create --base main --head "$branch" \
+            --title "civic: intake ${RECORD}" \
+            --body "From issue #${ISSUE}. A maintainer checks the source before merge.
+          Closes #${ISSUE}."; then
+            gh issue comment "$ISSUE" --body \
+              "Actions could not open the pull request. Open one from
+          https://github.com/${GITHUB_REPOSITORY}/compare/main...${branch}"
+          fi

@@ -1,0 +1,46 @@
+{
+  "generation": {
+    "at": "2026-11-09",
+    "content_hash": "sha256:3c29af1cf22c8311628811930b3f0cd12d676d41955281ad638e5efeab76fde2",
+    "generator": "civic_repo_gen/0.1.0",
+    "source_snapshot": {
+      "boundaries": "2026-11-09",
+      "law": "47a4f1a36ff92d20cd4f573143b89cf54ad58f44",
+      "officials": "2026-11-09T17:45:25Z",
+      "units": "2026-11-09"
+    }
+  },
+  "http_status": 0,
+  "id": "source:d67cc2aa6a7260fe",
+  "jurisdiction": "",
+  "kind": "source",
+  "license": "CC0-1.0",
+  "media_type": "html",
+  "note": "not fetched by the generator; tools/verify.py fetches it",
+  "overrides": [],
+  "privacy": "public-record",
+  "provenance": {
+    "added_at": "2026-11-09",
+    "added_by": "civic_repo_gen/0.1.0",
+    "evidence": {},
+    "sources": [
+      {
+        "license": "CC0-1.0",
+        "retrieved_at": "2026-11-09",
+        "source_id": "source:d67cc2aa6a7260fe",
+        "url": "https://github.com/openstates/people"
+      }
+    ],
+    "validated": {
+      "at": "2026-11-09",
+      "by": "civic_repo_gen/0.1.0",
+      "method": "generated-official"
+    },
+    "vouches": []
+  },
+  "publisher": "OpenStates / unitedstates",
+  "retrieved_at": "2026-11-09",
+  "schema_version": "civic/1",
+  "title": "OpenStates people (CC0)",
+  "url": "https://github.com/openstates/people"
+}

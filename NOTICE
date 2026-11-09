@@ -1,0 +1,30 @@
+NOTICE
+
+This repository is part of the AitherOS civic repos (`civic-<hierarchy>`).
+
+The schema and tooling in this repository are MIT licensed (see LICENSE).
+
+The FACTS in `records/` come from public datasets that keep their own terms:
+
+  Census of Governments, 2022
+    U.S. Census Bureau. US Government work; public domain.
+    https://www2.census.gov/programs-surveys/gus/datasets/2022/govt_units_2022.ZIP
+
+  TIGERweb
+    U.S. Census Bureau geography. US Government work; public domain.
+    Boundaries are referenced by URL (see `boundaries.geojson_url`), never copied
+    into this repository.
+
+  unitedstates/congress-legislators
+    CC0-1.0. https://github.com/unitedstates/congress-legislators
+
+  openstates/people
+    CC0-1.0. https://github.com/openstates/people
+
+  global-law corpus
+    Referenced by path and pinned commit only. No law text is copied into this
+    repository; read the corpus and its own NOTICE at the pinned commit.
+
+CC0 places the datasets in the public domain. Where a dataset says otherwise, its
+term wins for the rows that came from it, and the record's `license` field says
+which one applied.

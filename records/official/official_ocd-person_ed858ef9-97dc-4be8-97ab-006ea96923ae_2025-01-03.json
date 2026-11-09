@@ -1,0 +1,56 @@
+{
+  "contact": {
+    "office_email": "sd15@ohiosenate.gov",
+    "office_phone": "614-466-5131",
+    "official_website": "https://www.ohiosenate.gov/members/hearcel-f-craig"
+  },
+  "district": "15",
+  "generation": {
+    "at": "2026-11-09",
+    "content_hash": "sha256:18f3804a0129041f97df73f75cf7828b2606427d5d60910dcce1944a2d4f2f71",
+    "generator": "civic_repo_gen/0.1.0",
+    "source_snapshot": {
+      "boundaries": "2026-11-09",
+      "law": "47a4f1a36ff92d20cd4f573143b89cf54ad58f44",
+      "officials": "2026-11-09T17:45:25Z",
+      "units": "2026-11-09"
+    }
+  },
+  "id": "official:ocd-person/ed858ef9-97dc-4be8-97ab-006ea96923ae/2025-01-03",
+  "jurisdiction": "jur:us-oh",
+  "kind": "official",
+  "level": "state",
+  "overrides": [],
+  "person": {
+    "full_name": "Hearcel Craig",
+    "party": "Democratic"
+  },
+  "privacy": "public-official",
+  "provenance": {
+    "added_at": "2026-11-09",
+    "added_by": "civic_repo_gen/0.1.0",
+    "evidence": {},
+    "sources": [
+      {
+        "license": "CC0-1.0",
+        "retrieved_at": "2026-11-09",
+        "source_id": "source:d67cc2aa6a7260fe",
+        "url": "https://github.com/openstates/people"
+      }
+    ],
+    "validated": {
+      "at": "2026-11-09",
+      "by": "civic_repo_gen/0.1.0",
+      "method": "generated-official"
+    },
+    "vouches": []
+  },
+  "schema_version": "civic/1",
+  "status": "current",
+  "term": {
+    "end": null,
+    "start": "2025-01-03",
+    "status": "current"
+  },
+  "title": "Hearcel Craig (State Senator)"
+}

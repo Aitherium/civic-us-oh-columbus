@@ -1,0 +1,24 @@
+name: validate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: self-test the pinned rules
+        run: python tools/check.py --self-test
+      - name: validate every record
+        run: python tools/check.py --json
+      - name: build the site (refuses a failing repo)
+        run: python tools/build_site.py --out _site

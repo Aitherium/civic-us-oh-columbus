@@ -1,0 +1,85 @@
+name: Add a meeting
+description: A meeting notice, agenda or minutes page for a body in this repo.
+title: "meeting: "
+labels: ["submission", "meeting"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A bot turns this into a pull request. It only records what an official page
+        says. Do not submit a home address, personal email, or personal phone number
+        - it will be rejected.
+
+        A meeting record points at the clerk's own page; it never copies the
+        document. Do not name a private individual.
+  - type: input
+    id: record-type
+    attributes:
+      label: Record type
+      value: meeting
+      description: Leave as meeting.
+    validations:
+      required: true
+  - type: input
+    id: body-id
+    attributes:
+      label: Body ID
+      description: The full body id from records/body/, e.g. body:jur:us-ca:place:0644000-council
+      placeholder: body:jur:us-ca:place:0644000-council
+    validations:
+      required: true
+  - type: input
+    id: date
+    attributes:
+      label: Date
+      placeholder: "2026-11-12"
+    validations:
+      required: true
+  - type: input
+    id: meeting-number
+    attributes:
+      label: Meeting number
+      description: 1, or 2 for a second meeting on the same day.
+      placeholder: "1"
+    validations:
+      required: true
+  - type: dropdown
+    id: meeting-type
+    attributes:
+      label: Meeting type
+      options:
+        - regular
+        - special
+        - emergency
+        - workshop
+        - hearing
+        - committee
+    validations:
+      required: true
+  - type: dropdown
+    id: status
+    attributes:
+      label: Status
+      options:
+        - scheduled
+        - held
+        - cancelled
+        - rescheduled
+        - adjourned
+    validations:
+      required: true
+  - type: input
+    id: source-url
+    attributes:
+      label: Source URL
+      description: The clerk's agenda or notice page.
+      placeholder: https://lacity.gov/clerk/agendas
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: The source is the clerk's own page for this meeting.
+          required: true

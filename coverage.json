@@ -1,0 +1,33 @@
+{
+  "counts": {
+    "bodies": 0,
+    "jurisdiction": 1,
+    "measures": 0,
+    "meetings": 0,
+    "offices": 0,
+    "officials": 10,
+    "sources": 10
+  },
+  "gaps": [
+    "the body and office structure of Columbus is not in the Census of Governments cache (the listing carries no body or seat count). This repo lists no bodies or offices until the city's charter, or a crowd submission in records/body, adds them.",
+    "no meeting records: the City Clerk publishes agendas as PDFs; meeting ingestion is slice 2",
+    "no measure records: council-file ingestion is slice 2",
+    "global-law has no corpus for jur:us-oh:place:3918000 yet; nearest: country (united-states/federal). This repo references those corpora by path and pinned commit and never copies their text."
+  ],
+  "id": "jur:us-oh:place:3918000",
+  "lookup_gaps": [],
+  "schema_version": "civic/1",
+  "sources": [
+    "source:eface1276269399b",
+    "source:d67cc2aa6a7260fe",
+    "source:211515f1e1c70874",
+    "source:1b2611e148445eeb",
+    "source:cac1bce2418c0d7d",
+    "source:67251917d336a6a2",
+    "source:3558d714e91a782b",
+    "source:f885d50ccb05f78b",
+    "source:c8e6292d1256ba5b",
+    "source:0821347d93c8bab7"
+  ],
+  "status": "seed"
+}

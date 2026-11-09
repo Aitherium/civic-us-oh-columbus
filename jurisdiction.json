@@ -1,0 +1,162 @@
+{
+  "boundaries": {
+    "feature_count": 1,
+    "geojson_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/28/query?where=GEOID%3D%273918000%27&outFields=GEOID%2CNAME&returnGeometry=true&outSR=4326&f=geojson",
+    "license": "US Government work (public domain)",
+    "note": "",
+    "retrieved_at": "2026-11-09",
+    "simplification": "maxAllowableOffset 0.01 degrees (about 1 km)",
+    "source_url": "https://tigerweb.geo.census.gov/tigerwebmain/TIGERweb_main.html"
+  },
+  "codes": {
+    "census_geoid": "3918000",
+    "fips_county": "049",
+    "fips_state": "39",
+    "iso_3166_2": "US-OH",
+    "ocd_id": "ocd-division/country:us/state:oh/place:columbus",
+    "place_fips": "18000"
+  },
+  "coverage": {
+    "counts": {
+      "bodies": 0,
+      "jurisdiction": 1,
+      "measures": 0,
+      "meetings": 0,
+      "offices": 0,
+      "officials": 10,
+      "sources": 10
+    },
+    "gaps": [
+      "the body and office structure of Columbus is not in the Census of Governments cache (the listing carries no body or seat count). This repo lists no bodies or offices until the city's charter, or a crowd submission in records/body, adds them.",
+      "no meeting records: the City Clerk publishes agendas as PDFs; meeting ingestion is slice 2",
+      "no measure records: council-file ingestion is slice 2",
+      "global-law has no corpus for jur:us-oh:place:3918000 yet; nearest: country (united-states/federal). This repo references those corpora by path and pinned commit and never copies their text."
+    ],
+    "status": "seed"
+  },
+  "external_ids": {
+    "ballotpedia": null,
+    "osm_relation": null,
+    "wikidata": null,
+    "wikipedia": null
+  },
+  "generation": {
+    "at": "2026-11-09",
+    "content_hash": "sha256:c97aa2160864d6a8261828001c41af6335e468cfeb6e14a85e51ac942e6e3495",
+    "generator": "civic_repo_gen/0.1.0",
+    "source_snapshot": {
+      "boundaries": "2026-11-09",
+      "law": "47a4f1a36ff92d20cd4f573143b89cf54ad58f44",
+      "officials": "2026-11-09T17:45:25Z",
+      "units": "2026-11-09"
+    }
+  },
+  "id": "jur:us-oh:place:3918000",
+  "jurisdiction": "jur:us-oh:place:3918000",
+  "kind": "jurisdiction",
+  "law": {
+    "covered": false,
+    "gap": "global-law has no corpus for jur:us-oh:place:3918000 yet; nearest: country (united-states/federal). This repo references those corpora by path and pinned commit and never copies their text.",
+    "nearest": [
+      {
+        "corpora": [
+          {
+            "name": "United States Code",
+            "path": "united-states/federal/usc",
+            "record_to": "2026-10-20",
+            "url": "https://github.com/lexifina/united-states-law.git",
+            "warnings": [
+              "corpus.json has no citation rule, so citations of this law are not recognised"
+            ]
+          }
+        ],
+        "iso_path": "us/federal",
+        "jurisdiction": "jur:us",
+        "level": "country",
+        "path": "united-states/federal",
+        "pinned_commit": "47a4f1a36ff92d20cd4f573143b89cf54ad58f44"
+      }
+    ]
+  },
+  "level": "city",
+  "name": "City of Columbus",
+  "overrides": [],
+  "parent": "jur:us-oh",
+  "privacy": "public-record",
+  "provenance": {
+    "added_at": "2026-11-09",
+    "added_by": "civic_repo_gen/0.1.0",
+    "evidence": {},
+    "sources": [
+      {
+        "license": "US Government work (public domain)",
+        "retrieved_at": "2026-11-09",
+        "source_id": "source:eface1276269399b",
+        "url": "https://www2.census.gov/programs-surveys/gus/datasets/2022/govt_units_2022.ZIP"
+      },
+      {
+        "license": "CC0-1.0",
+        "retrieved_at": "2026-11-09",
+        "source_id": "source:d67cc2aa6a7260fe",
+        "url": "https://github.com/openstates/people"
+      },
+      {
+        "license": "CC0-1.0",
+        "retrieved_at": "2026-11-09",
+        "source_id": "source:211515f1e1c70874",
+        "url": "https://governor.ohio.gov/"
+      },
+      {
+        "license": "CC0-1.0",
+        "retrieved_at": "2026-11-09",
+        "source_id": "source:1b2611e148445eeb",
+        "url": "https://governor.ohio.gov/administration/lt-governor"
+      },
+      {
+        "license": "CC0-1.0",
+        "retrieved_at": "2026-11-09",
+        "source_id": "source:cac1bce2418c0d7d",
+        "url": "https://www.columbus.gov/Government/Mayors-Office/About-Mayor-Andrew-J.-Ginther"
+      },
+      {
+        "license": "CC0-1.0",
+        "retrieved_at": "2026-11-09",
+        "source_id": "source:67251917d336a6a2",
+        "url": "https://www.ohioattorneygeneral.gov/About-AG/Dave-Yost"
+      },
+      {
+        "license": "CC0-1.0",
+        "retrieved_at": "2026-11-09",
+        "source_id": "source:3558d714e91a782b",
+        "url": "https://www.sos.state.oh.us"
+      },
+      {
+        "license": "US Government work (public domain)",
+        "retrieved_at": "2026-11-09",
+        "source_id": "source:f885d50ccb05f78b",
+        "url": "https://tigerweb.geo.census.gov/tigerwebmain/TIGERweb_main.html"
+      },
+      {
+        "license": "see NOTICE",
+        "retrieved_at": "2026-11-09",
+        "source_id": "source:c8e6292d1256ba5b",
+        "url": "https://github.com/lexifina/united-states-law"
+      },
+      {
+        "license": "site terms",
+        "retrieved_at": "2026-11-09",
+        "source_id": "source:0821347d93c8bab7",
+        "url": "https://www.columbus.gov/"
+      }
+    ],
+    "validated": {
+      "at": "2026-11-09",
+      "by": "civic_repo_gen/0.1.0",
+      "method": "generated-official"
+    },
+    "vouches": []
+  },
+  "schema_version": "civic/1",
+  "slug": "us-oh-place-city-of-columbus",
+  "title": "City of Columbus, OH"
+}

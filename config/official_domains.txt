@@ -1,0 +1,9 @@
+# Hosts this repo may cite, beyond the built-in gov / mil / us suffixes.
+# One suffix per line; a host matches if it equals the entry or ends with .<entry>.
+#
+# The CC0 vendor datasets live on GitHub. Their canonical copy is the repository,
+# so a source record that points at one must be able to name github.com.
+github.com
+# Add a jurisdiction's own official hosts below, one per line, with a comment that
+# says which body publishes there. A crowd submission is refused (CV050) until its
+# host is listed here, so this file is the allowlist decision, in the PR.

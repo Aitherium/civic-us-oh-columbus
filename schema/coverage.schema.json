@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://civic.aitherium.com/schema/coverage.schema.json",
+  "title": "civic coverage (civic/1)",
+  "description": "coverage.json. The validator recomputes every count from the files on disk and raises CV060 on a mismatch, so this block cannot drift.",
+  "type": "object",
+  "required": ["schema_version", "id", "status", "counts", "gaps", "sources"],
+  "properties": {
+    "schema_version": {"const": "civic/1"},
+    "id": {"type": "string"},
+    "status": {"enum": ["empty", "seed", "partial", "covered"]},
+    "counts": {
+      "type": "object",
+      "required": ["jurisdiction", "bodies", "offices", "officials", "meetings", "measures", "sources"],
+      "additionalProperties": {"type": "integer", "minimum": 0}
+    },
+    "gaps": {"type": "array", "items": {"type": "string"}},
+    "sources": {"type": "array", "items": {"pattern": "^source:[0-9a-f]{16}$"}}
+  }
+}

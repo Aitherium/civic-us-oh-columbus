@@ -1,0 +1,71 @@
+name: Add or correct an official
+description: Who holds a seat, with the page that says so.
+title: "official: "
+labels: ["submission", "official"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A bot turns this into a pull request. It only records what an official page
+        says. Do not submit a home address, personal email, or personal phone number
+        - it will be rejected.
+
+        Office contact only. Never a home address, a personal phone or email, a
+        date of birth, or a family detail. The validator rejects those keys.
+  - type: input
+    id: record-type
+    attributes:
+      label: Record type
+      value: official
+      description: Leave as official.
+    validations:
+      required: true
+  - type: input
+    id: office-id
+    attributes:
+      label: Office ID
+      description: The full office id from records/office/, e.g. office:body:jur:us-ca:place:0644000-mayor/mayor
+      placeholder: office:body:jur:us-ca:place:0644000-mayor/mayor
+    validations:
+      required: true
+  - type: input
+    id: full-name
+    attributes:
+      label: Full name
+    validations:
+      required: true
+  - type: input
+    id: party
+    attributes:
+      label: Party (optional)
+      description: Only if the official page states it.
+  - type: input
+    id: district
+    attributes:
+      label: District
+      description: A district number or name, or blank for an at-large seat.
+  - type: input
+    id: term-end
+    attributes:
+      label: Term end
+      description: YYYY-MM-DD, from the official page.
+      placeholder: "2027-01-03"
+    validations:
+      required: true
+  - type: input
+    id: source-url
+    attributes:
+      label: Source URL
+      description: The official page that names this person in this seat.
+      placeholder: https://lacity.gov/mayor
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: The source is an official page, not a news article or a social post.
+          required: true
+        - label: I did not include any private information about this person.
+          required: true

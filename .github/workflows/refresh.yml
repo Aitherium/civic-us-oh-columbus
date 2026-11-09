@@ -1,0 +1,104 @@
+name: refresh
+
+# Keeps this civic repo current without anyone's laptop: re-checks every cited
+# source, and has Bonsai (a 1-bit model that runs on a plain CPU) write
+# plain-language summaries of meetings and measures. A public repo gets GitHub's
+# hosted runners free, so this costs nothing. Set the repo variable CIVIC_RUNNER
+# to a self-hosted label (e.g. "awnix") to run it on an Aitherium runner instead.
+#
+# It never pushes to main. Changes arrive as one pull request a maintainer reviews.
+# Summaries are machine-written, live under summaries/, and are labelled as such.
+#
+# The generator itself (``civic_repo_gen refresh``) does NOT run here: it lives in
+# AitherOS (dev/tools/civic_repo_gen.py) and reads the Census/OpenStates caches
+# kept there, which a standalone generated repo does not carry. What this workflow
+# can do on its own is re-check the cited sources and write summaries; a record's
+# generated body is refreshed from AitherOS, which opens the same kind of PR.
+
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Most summaries to write this run"
+        default: "10"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+
+env:
+  MODEL_FILE: Bonsai-8B-Q1_0.gguf
+  MODEL_URL: https://weights.aitherium.com/Bonsai-8B-Q1_0.gguf
+  # Bonsai 1 Q1_0 runs on stock llama.cpp. (Bonsai 2 needs the PrismML fork.)
+  LLAMA_IMAGE: ghcr.io/ggml-org/llama.cpp:server
+
+jobs:
+  refresh:
+    runs-on: ${{ vars.CIVIC_RUNNER || 'ubuntu-latest' }}
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: re-check every cited source
+        # A dead source is reported in the PR, not a reason to stop the run.
+        run: python tools/verify.py --stamp | tee verify.log || true
+
+      - name: model weights (cached between runs)
+        uses: actions/cache@v4
+        with:
+          path: models
+          key: bonsai-${{ env.MODEL_FILE }}
+
+      - name: start Bonsai on the CPU
+        run: |
+          mkdir -p models
+          [ -s "models/$MODEL_FILE" ] || curl -fsSL --retry 3 -o "models/$MODEL_FILE" "$MODEL_URL"
+          docker run -d --name bonsai -p 8080:8080 -v "$PWD/models:/models" "$LLAMA_IMAGE" \
+            -m "/models/$MODEL_FILE" --host 0.0.0.0 --port 8080 -c 8192 -t "$(nproc)"
+          for i in $(seq 1 60); do
+            curl -sf http://127.0.0.1:8080/health >/dev/null && exit 0
+            sleep 5
+          done
+          docker logs bonsai | tail -20
+          exit 1
+
+      - name: write plain-language summaries
+        env:
+          LIMIT: ${{ github.event.inputs.limit || '10' }}
+        run: |
+          case "$LIMIT" in ''|*[!0-9]*) echo "limit must be a number"; exit 1;; esac
+          rc=0
+          python tools/summarize.py --endpoint http://127.0.0.1:8080 --limit "$LIMIT" || rc=$?
+          # 2 = nothing to summarise, which is fine
+          [ "$rc" = 0 ] || [ "$rc" = 2 ]
+
+      - name: validate
+        run: python tools/check.py
+
+      - name: open a pull request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git add -A records summaries
+          if git diff --cached --quiet; then echo "nothing changed"; exit 0; fi
+          # The branch name carries the content hash, so a re-run cannot rewrite a
+          # pull request a maintainer is already reading, and no force-push is needed.
+          branch="refresh/$(date -u +%Y-%m-%d)-$(git diff --cached | sha256sum | cut -c1-12)"
+          git checkout -b "$branch"
+          git -c user.name="civic-refresh" -c user.email="civic@aitherium.com" \
+            commit -m "civic: daily refresh $(date -u +%Y-%m-%d)"
+          git push origin "$branch" || { echo "this exact refresh is already pushed"; exit 0; }
+          gh pr view "$branch" >/dev/null 2>&1 || gh pr create --base main --head "$branch" \
+            --title "civic: daily refresh $(date -u +%Y-%m-%d)" \
+            --body "Source re-check and machine-written summaries (Bonsai, CPU). Summaries are reading aids, not records.
+
+          $(tail -20 verify.log)"

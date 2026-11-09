@@ -1,0 +1,81 @@
+name: Add a body
+description: A council, board, commission or authority that governs here.
+title: "body: "
+labels: ["submission", "body"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A bot turns this into a pull request. It only records what an official page
+        says. Do not submit a home address, personal email, or personal phone number
+        - it will be rejected.
+
+        Everything you type is public. Do not include a home address, a personal
+        phone or email, a date of birth, or anything about a person's family.
+        A source URL is required: the validator refuses an unsourced record, and it
+        refuses a host that is not on `config/official_domains.txt`.
+  - type: input
+    id: record-type
+    attributes:
+      label: Record type
+      value: body
+      description: Leave as body.
+    validations:
+      required: true
+  - type: input
+    id: name
+    attributes:
+      label: Name
+      placeholder: Rent Stabilization Board
+    validations:
+      required: true
+  - type: input
+    id: seats
+    attributes:
+      label: Seats
+      description: How many seats the body has.
+      placeholder: "9"
+    validations:
+      required: true
+  - type: dropdown
+    id: selection
+    attributes:
+      label: Selection
+      options:
+        - elected
+        - appointed
+        - mixed
+    validations:
+      required: true
+  - type: dropdown
+    id: body-type
+    attributes:
+      label: Body type
+      options:
+        - council
+        - board
+        - commission
+        - legislature
+        - school_board
+        - committee
+        - authority
+        - special_district_board
+    validations:
+      required: true
+  - type: input
+    id: source-url
+    attributes:
+      label: Source URL
+      description: The official page that names this body and its seats.
+      placeholder: https://lacity.gov/rsob
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: The source is the body's own official page, not a news article.
+          required: true
+        - label: This contains no private information about any person.
+          required: true
