@@ -34,7 +34,10 @@ concurrency:
 
 env:
   MODEL_FILE: Bonsai-8B-Q1_0.gguf
-  MODEL_URL: https://weights.aitherium.com/Bonsai-8B-Q1_0.gguf
+  # Hugging Face first: weights.aitherium.com answers GitHub-hosted runners 403
+  # (measured 2026-11-09, run 42713051853). The mirror stays as the fallback.
+  MODEL_URL: https://huggingface.co/prism-ml/Bonsai-8B-gguf/resolve/main/Bonsai-8B-Q1_0.gguf
+  MODEL_MIRROR: https://weights.aitherium.com/Bonsai-8B-Q1_0.gguf
   # Bonsai 1 Q1_0 runs on stock llama.cpp. (Bonsai 2 needs the PrismML fork.)
   LLAMA_IMAGE: ghcr.io/ggml-org/llama.cpp:server
 
@@ -61,7 +64,8 @@ jobs:
       - name: start Bonsai on the CPU
         run: |
           mkdir -p models
-          [ -s "models/$MODEL_FILE" ] || curl -fsSL --retry 3 -o "models/$MODEL_FILE" "$MODEL_URL"
+          [ -s "models/$MODEL_FILE" ] || curl -fsSL --retry 3 -o "models/$MODEL_FILE" "$MODEL_URL" \
+            || curl -fsSL --retry 3 -o "models/$MODEL_FILE" "$MODEL_MIRROR"
           docker run -d --name bonsai -p 8080:8080 -v "$PWD/models:/models" "$LLAMA_IMAGE" \
             -m "/models/$MODEL_FILE" --host 0.0.0.0 --port 8080 -c 8192 -t "$(nproc)"
           for i in $(seq 1 60); do
