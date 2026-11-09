@@ -94,7 +94,10 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git add -A records summaries
+          # summaries/ exists only once a meeting or measure has been summarised;
+          # `git add` of a missing path is fatal (run 42714109198).
+          git add -A records
+          [ -d summaries ] && git add -A summaries
           if git diff --cached --quiet; then echo "nothing changed"; exit 0; fi
           # The branch name carries the content hash, so a re-run cannot rewrite a
           # pull request a maintainer is already reading, and no force-push is needed.
