@@ -1,9 +1,9 @@
 {
-  "content_hash": "sha256:d33ea3a3418c71738ae7d1db73eb1aa0b56dc2696a4ca81f741aa0854927e517",
-  "etag": "W/\"c8ec8ea420d16483144edeabf7231950\"",
+  "content_hash": "sha256:0ad55379bcef6d36d24a954957fb5f5feaa75b11576bdd91fa315732db1f8c27",
+  "etag": "W/\"83c0cf8fec9fb56750b322015b480d0f\"",
   "generation": {
     "at": "2026-11-09",
-    "content_hash": "sha256:4c077e1b69fb68f183e732f404ed96b8110b8156114dddfcea87b01c997aaf71",
+    "content_hash": "sha256:17e701b534a7c608f8136aea4eda97fc21d63ff8fde88b29b6c6e727a8e9538d",
     "generator": "civic_repo_gen/0.1.0",
     "source_snapshot": {
       "boundaries": "2026-11-09",
@@ -34,7 +34,7 @@
       }
     ],
     "validated": {
-      "at": "2026-11-09",
+      "at": "2026-11-13",
       "by": "civic-verify-bot",
       "method": "source-fetched"
     },
