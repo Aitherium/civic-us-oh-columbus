@@ -2,7 +2,7 @@
   "content_hash": "sha256:575cddb9294fa833c44f9ef05970958137fabddad6d2eeb657b3c2e56be54114",
   "generation": {
     "at": "2026-11-09",
-    "content_hash": "sha256:cbe132fb8f4ee8a9e9f563e05e58f899e97776132e28498b502032e5e8e61cde",
+    "content_hash": "sha256:53b27234760023ffd35e415a91c0c3019b35d07fa130bea1929e75109c37d2af",
     "generator": "civic_repo_gen/0.1.0",
     "source_snapshot": {
       "boundaries": "2026-11-09",
@@ -34,7 +34,7 @@
       }
     ],
     "validated": {
-      "at": "2026-11-09",
+      "at": "2026-11-14",
       "by": "civic-verify-bot",
       "method": "source-fetched"
     },
